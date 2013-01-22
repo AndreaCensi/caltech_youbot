@@ -1,0 +1,14 @@
+<package>
+  <description brief="youbot_bootagent_driver">
+
+     youbot_bootagent_driver
+
+  </description>
+  <author>Adam</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/youbot_bootagent_driver</url>
+
+</package>
+
+
