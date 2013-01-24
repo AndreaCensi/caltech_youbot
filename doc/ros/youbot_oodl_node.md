@@ -1,18 +1,20 @@
 # Node [/youbot_oodl_driver]
 
-## Publications: 
+If succesfully initialized, the ros node will have the following interfaces:
+
+### Publications: 
  * /joint_states [sensor_msgs/JointState]
  * /rosout [rosgraph_msgs/Log]
  * /tf [tf/tfMessage]
  * /odom [nav_msgs/Odometry]
 
-## Subscriptions: 
+### Subscriptions: 
  * /arm_1/gripper_controller/position_command [unknown type]
  * /arm_1/arm_controller/position_command [unknown type]
  * /cmd_vel [unknown type]
  * /arm_1/arm_controller/velocity_command [unknown type]
 
-## Services: 
+### Services: 
  * /reconnect
  * /base/switchOffMotors
  * /arm_1/switchOnMotors
@@ -22,7 +24,7 @@
  * /base/switchOnMotors
  * /youbot_oodl_driver/set_logger_level
 
-## Connections:
+### Connections:
  * topic: /rosout
     * to: /rosout
     * direction: outbound
