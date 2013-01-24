@@ -37,3 +37,32 @@ There is currently no service to change the rate on the run and there is no func
 The YouBot controller can take commands witha frecuency of 1kHz.
  
 ![rxgraph](images/youbot_oodl_driver_rxgraph.png)
+
+## Controller Messages
+### velocity_command
+Commands a velocity to the robot. 
+
+  Message type:      `brics_actuator.msg.JointVelocities()`
+  
+  Message properties:
+  
+    poisonStamp: 
+      originator: ''
+      description: ''
+      qos: 0.0
+    velocities: []
+    
+  velocities contains an array with `brics_actuator.msg.JointValue()` messages. each `JointValue()` message specifies the velocity of one joint. It has the properties:
+  
+    timeStamp: 
+      secs: 0
+      nsecs: 0
+    joint_uri: ''
+    unit: ''
+    value: 0.0
+    
+  * joint_uri specifies the name of the joint. The uris for the manipulator joints are 'arm_joint_1', ..., 'arm_joint_5'
+  * unit specifies the units of the value by a string. Possible values in python are:
+    - `'s^-1 rad'` radians per second
+    - TODO: complete list
+  * value specifies the velocity value.
