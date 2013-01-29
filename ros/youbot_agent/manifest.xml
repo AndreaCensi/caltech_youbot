@@ -1,0 +1,24 @@
+<package>
+  <description brief="youbot_agent">
+
+     youbot_agent
+
+  </description>
+  <author>Adam Nilsson</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/youbot_agent</url>
+  <depend package="std_msgs"/>
+  <depend package="rospy"/>
+  <depend package="tf"/>
+  <depend package="geometry_msgs"/>
+  <depend package="nav_msgs"/>
+  <depend package="std_srvs"/>
+  <depend package="trajectory_msgs"/>
+  <depend package="brics_actuator"/> <!--BRICS interface messages, version 0.1 -->
+  <!--<depend package="soem"/>-->
+  <depend package="youbot_driver"/>
+
+</package>
+
+

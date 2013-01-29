@@ -9,27 +9,7 @@ include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 #  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
 #set(ROS_BUILD_TYPE RelWithDebInfo)
 
-## check required prerequisites
-SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/external/cmake_modules")
-SET(Boost_USE_STATIC_LIBS ON)
-SET(Boost_ADDITIONAL_VERSIONS "1.39" "1.39.0" "1.40" "1.40.0" "1.41" "1.41.0" "1.42" "1.42.0" "1.43" "1.43.0" "1.44" "1.44.0" "1.45" "1.45.0" "1.46" "1.46.0")
-FIND_PACKAGE(Boost REQUIRED COMPONENTS thread date_time filesystem system)
-SET(ROS_ROOT_PATH $ENV{ROS_ROOT})
 rosbuild_init()
-
-# YouBot packages???
-rosbuild_find_ros_package(youbot_driver)
-SET(OODL_YOUBOT_LIBRARIES YouBotDriver)
-SET(OODL_YOUBOT_CONFIG_DIR ${youbot_driver_PACKAGE_PATH}/config/)
-
-## preprocessor definitions
-ADD_DEFINITIONS(-DYOUBOT_CONFIGURATIONS_DIR="${OODL_YOUBOT_CONFIG_DIR}/")
-
-## Set include directories
-INCLUDE_DIRECTORIES(
-    ${OODL_YOUBOT_INCLUDE_DIR}
-    ${Boost_INCLUDE_DIR}
-)
 
 #set the default path for built executables to the "bin" directory
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
@@ -42,16 +22,9 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_gensrv()
 
 #common commands for building c++ executables and libraries
-rosbuild_add_library(${PROJECT_NAME} src/YouBotDriverNode.cpp)
+#rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
 #target_link_libraries(${PROJECT_NAME} another_library)
 #rosbuild_add_boost_directories()
 #rosbuild_link_boost(${PROJECT_NAME} thread)
 #rosbuild_add_executable(example examples/example.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
-
-# YouBot libraries
-TARGET_LINK_LIBRARIES(youbot_bootagent_driver 
-    ${OODL_YOUBOT_LIBRARIES}
-    ${Boost_LIBRARIES}
-    pthread
-)
