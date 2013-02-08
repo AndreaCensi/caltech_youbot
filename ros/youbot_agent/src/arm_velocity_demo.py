@@ -7,6 +7,7 @@ import brics_actuator.msg
 import sys
 import pdb
 import numpy as np
+from velocity_joint_control import get_joint_velocity_msg
 
 def main(args):
     node_name = 'youbot_arm_velocity_demo'
@@ -46,33 +47,7 @@ def main(args):
         print(array)
         velocity_publisher.publish(msg)
         r.sleep()
-        
-    
-    
-def get_joint_velocity_msg(array, timeStamp=None):
-    '''
-    
-    :param array:    float array with values to the joints
-    '''
-    
-    num_joints = len(array)
-    
-    msg = brics_actuator.msg.JointVelocities()
-    msg.poisonStamp.description = 'Joint velocities generated with python by youbot_demo arm_velocity_demo.'
-    
-    for i in range(num_joints):
-        joint_value = brics_actuator.msg.JointValue()
-        
-        joint_value.joint_uri = 'arm_joint_' + str(i + 1)
-        if timeStamp is not None:
-            joint_value.timeStamp = timeStamp
-        joint_value.unit = 's^-1 rad'
-        joint_value.value = array[i]
-        
-        msg.velocities.append(joint_value)
-        
-    assert len(msg.velocities) == num_joints
-    return msg
+
 
 if __name__ == '__main__':
     main(sys.argv)

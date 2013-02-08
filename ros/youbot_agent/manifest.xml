@@ -18,6 +18,7 @@
   <depend package="brics_actuator"/> <!--BRICS interface messages, version 0.1 -->
   <!--<depend package="soem"/>-->
   <depend package="youbot_driver"/>
+  <depend package="array_msgs"/>
 
 </package>
 
