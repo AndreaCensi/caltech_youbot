@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import roslib; roslib.load_manifest('youbot_demo')
+import roslib; roslib.load_manifest('youbot_agent')
 
 import rospy #@UnresolvedImport
 import brics_actuator.msg #@UnresolvedImport
@@ -8,14 +8,23 @@ import sys
 import numpy as np
 from velocity_joint_control import get_joint_velocity_msg
 import pdb
+import array_msgs.msg #@UnresolvedImport
 
 def main(args):
-    node_name = 'youbot_arm_position_demo'
+    node_name = 'youbot_arm_position_controller'
     rospy.init_node(node_name)
     print('Node started')
     velocity_publisher = rospy.Publisher('/arm_1/arm_controller/velocity_command', brics_actuator.msg.JointVelocities)
     position_publisher = rospy.Publisher('/arm_1/arm_controller/position_command', brics_actuator.msg.JointPositions)
 
+    def position_array_callback(msg):
+        print('callback')
+        print('Received array ' + str(msg.data))
+        msg = get_joint_position_msg(msg.data, rospy.get_rostime())
+        position_publisher.publish(msg)
+    
+    rospy.Subscriber('/youbot_arm/position_instruction', array_msgs.msg.FloatArray, position_array_callback)
+    
     def stop_manipulator():
         print('Sending stop signal (zero velocity) to robot arm')
         # Finally stop the robot
@@ -23,7 +32,7 @@ def main(args):
         velocity_publisher.publish(msg)
         
     rospy.on_shutdown(stop_manipulator)
-    
+#    rospy.spin()
     while not rospy.is_shutdown():
         try:
             sys.stdout.write('\033[45m' + node_name + '$\033[0m ')
@@ -41,7 +50,7 @@ def main(args):
         except:
             print('\033[91mError: Unexpected error occurred \033[0m')
             stop_manipulator()
-            pdb.set_trace()
+#            pdb.set_trace()
     
     
 def get_joint_position_msg(array, timeStamp=None):
