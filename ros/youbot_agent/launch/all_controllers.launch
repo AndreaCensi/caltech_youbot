@@ -1,0 +1,5 @@
+<launch>
+	<node name="youbot_velocity" pkg="youbot_agent" type="velocity_joint_control.py"/>
+	<node name="youbot_position" pkg="youbot_agent" type="position_joint_control.py"/>
+	<node name="youbot_incremental" pkg="youbot_agent" type="incremental_control.py"/>
+</launch>
