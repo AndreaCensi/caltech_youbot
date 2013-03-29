@@ -1,0 +1,48 @@
+<!-- 
+
+    Run with:
+    
+        roslaunch youbot_oodl youbot_oodl_driver.launch
+        roslaunch youbot_agent demo-two-hokuyos.launch
+
+    Our two Hokuyos have device ID:
+
+    /dev/sensors/hokuyo_H1204906
+    /dev/sensors/hokuyo_H1205005
+-->
+
+<launch>
+
+    <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" 
+          args="0.1765 0.165 0 0 0 0 /base_footprint /hokuyo_H1204906 100" />
+
+ # static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms
+ # 13.3 inches = 33cm
+ # yaw = -180 deg = 
+    <node pkg="tf" type="static_transform_publisher" name="link2_broadcaster" 
+          args="-0.33 -0.015 0 3.205 0 0 /hokuyo_H1204906 /hokuyo_H1205005 100" />
+
+    <!-- this is the right one -->
+    <node pkg="hokuyo_node" type="hokuyo_node"  name="hokuyo_H1204906">
+        <param name="port" value="/dev/sensors/hokuyo_H1204906" />
+        <param name="frame_id" value="/hokuyo_H1204906"/>
+        <param name="intensity" value="true"/>
+        <param name="min_ang" type="double" value="-2.35619449019234492883" />
+        <param name="max_ang" type="double" value="2.35619449019234492883" />
+
+        <remap from="scan" to="scan_hokuyo_H1204906" /> 
+    </node>
+
+    <!-- this is the left one -->
+    <node pkg="hokuyo_node" type="hokuyo_node"  name="hokuyo_H1205005">
+        <param name="port" value="/dev/sensors/hokuyo_H1205005" />
+        <param name="frame_id" value="/hokuyo_H1205005"/>
+        <param name="intensity" value="true"/>
+        <param name="min_ang" type="double" value="-2.35619449019234492883" />
+        <param name="max_ang" type="double" value="2.35619449019234492883" />
+    
+        <remap from="scan" to="scan_hokuyo_H1205005" /> 
+    </node>
+
+    <!-- robot drivers -->
+</launch>
