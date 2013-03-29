@@ -14,13 +14,13 @@
 <launch>
 
     <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" 
-          args="0.1765 0.165 0 0 0 0 /base_footprint /hokuyo_H1204906 100" />
+          args="0.1765 -0.165 0 -1.57 0 0 /base_footprint /hokuyo_H1204906 10" />
 
  # static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms
  # 13.3 inches = 33cm
  # yaw = -180 deg = 
     <node pkg="tf" type="static_transform_publisher" name="link2_broadcaster" 
-          args="-0.33 -0.015 0 3.205 0 0 /hokuyo_H1204906 /hokuyo_H1205005 100" />
+          args="-0.33 -0.015 0 3.205 0 0 /hokuyo_H1204906 /hokuyo_H1205005 10" />
 
     <!-- this is the right one -->
     <node pkg="hokuyo_node" type="hokuyo_node"  name="hokuyo_H1204906">
