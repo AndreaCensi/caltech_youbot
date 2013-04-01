@@ -3,7 +3,7 @@
 
 -->
 <launch>
-  <arg name="noshow" default="false" />
+  <arg name="noshow" default="true" />
 
   <arg name="width" default="320" />
   <arg name="height" default="240" />
@@ -19,7 +19,7 @@
 <!--
 
   <node name="cam_back_2" 
-    pkg="usb_cam" type="usb_cam_node" output="screen" >
+    pkg="usb_cam" type="usb_cam_node"  >
     <param name="video_device" 
            value="/dev/v4l/by-id/usb-046d_0994_FEC24AA0-video-index0" />
     <param name="image_width" value="$(arg width)" />
@@ -31,7 +31,7 @@
 -->
 
   <node name="cam_back" 
-    pkg="usb_cam" type="usb_cam_node" output="screen" >
+    pkg="usb_cam" type="usb_cam_node" >
     <param name="video_device" 
            value="/dev/v4l/by-id/usb-046d_0994_D46989A0-video-index0" />
     <param name="image_width" value="$(arg width)" />
@@ -43,7 +43,7 @@
 
 
   <node name="cam_eye_right" 
-    pkg="usb_cam" type="usb_cam_node" output="screen" >
+    pkg="usb_cam" type="usb_cam_node"  >
     <param name="video_device" 
            value="/dev/v4l/by-id/usb-Vimicro_Corp._Venus_USB2.0_Camera-video-index0" />
     <param name="image_width" value="$(arg width)" />

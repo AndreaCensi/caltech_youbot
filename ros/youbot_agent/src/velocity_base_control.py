@@ -59,8 +59,6 @@ def get_twist_velocity_msg(array, timeStamp=None):
     velocity in fwd, bwd, rotation
     '''
     
-    
-    
     msg = geometry_msgs.msg.Twist()
     if len(array)>=1:
         msg.linear.x = array[0]

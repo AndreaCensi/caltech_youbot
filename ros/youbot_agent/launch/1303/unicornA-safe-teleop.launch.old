@@ -1,0 +1,14 @@
+<launch>
+
+ <node type="youbot_keyboard_teleop.py" pkg="youbot_oodl" name="teleop" output="screen">
+    <remap from="/cmd_vel" to="/youboy_safety/in_cmd_vel"/>
+ </node>
+
+
+ <node type="youbot_safety.py" pkg="youbot_agent" name="youbot_safety" output="screen">
+    <remap from="~out_cmd_vel" to="/cmd_vel"/>
+ </node>
+
+</launch>
+
+ 

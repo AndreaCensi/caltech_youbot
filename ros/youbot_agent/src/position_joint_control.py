@@ -6,52 +6,66 @@ import rospy #@UnresolvedImport
 import brics_actuator.msg #@UnresolvedImport
 import sys
 import numpy as np
+
 from velocity_joint_control import get_joint_velocity_msg
-import pdb
+
 import array_msgs.msg #@UnresolvedImport
 
 def main(args):
     node_name = 'youbot_arm_position_controller'
     rospy.init_node(node_name)
-    print('Node started')
+    rospy.loginfo('Arm position controller started.')
     velocity_publisher = rospy.Publisher('/arm_1/arm_controller/velocity_command', brics_actuator.msg.JointVelocities)
     position_publisher = rospy.Publisher('/arm_1/arm_controller/position_command', brics_actuator.msg.JointPositions)
 
     def position_array_callback(msg):
-        print('callback')
-        print('Received array ' + str(msg.data))
+        rospy.loginfo('callback, received array %s' % msg)
+        # print('callback')
+        # print('Received array ' + str(msg.data))
         msg = get_joint_position_msg(msg.data, rospy.get_rostime())
         position_publisher.publish(msg)
     
     rospy.Subscriber('/youbot_arm/position_instruction', array_msgs.msg.FloatArray, position_array_callback)
     
     def stop_manipulator():
-        print('Sending stop signal (zero velocity) to robot arm')
-        # Finally stop the robot
+        rospy.logerr('Sending stop signal (zero velocity) to robot arm')
         msg = get_joint_velocity_msg(np.zeros(5), rospy.get_rostime())
         velocity_publisher.publish(msg)
         
     rospy.on_shutdown(stop_manipulator)
-#    rospy.spin()
+
     while not rospy.is_shutdown():
         try:
-            sys.stdout.write('\033[45m' + node_name + '$\033[0m ')
-            evaled = eval(sys.stdin.readline())
-#            pdb.set_trace()
-            if evaled.__class__ in [tuple, list]:
-#                print('\033[91mError: Command not supported\033[0m')
-                array = np.array(evaled)
-                msg = get_joint_position_msg(array, rospy.get_rostime())
-                position_publisher.publish(msg)
-                print('Published position command: ' + str(array))
-            else:
-                print('\033[91mError: Unexpected command\033[0m')
-                stop_manipulator()
-        except:
+            array = read_array(prompt=node_name)
+            msg = get_joint_position_msg(array, rospy.get_rostime())
+            position_publisher.publish(msg)    
+            rospy.loginfo('Published position command: ' + str(array))
+
+        except Exception as e:
+            rospy.logerr('Unexpected error occurred (%s: %s).' % (type(e), e))
             print('\033[91mError: Unexpected error occurred \033[0m')
             stop_manipulator()
-#            pdb.set_trace()
+
+def read_array(prompt='>'):
+    """ Reads a line and tries to evaluate it. Returns an array or Exception."""
+    line = read_line(prompt=prompt)
+
+    try:
+        evaled = eval(line)
+    except:
+        raise Exception('Could not evaluate %r' % line)
+
+    if evaled.__class__ in [tuple, list]:
+        array = np.array(evaled)
+        return array
+    else:
+        raise Exception('Not an array:' % line) 
     
+def read_line(prompt='>'):
+    """ Returns a string """
+    sys.stdout.write('\033[45m' + prompt + '$\033[0m ')
+    line = sys.stdin.readline()
+    return line
     
 def get_joint_position_msg(array, timeStamp=None):
     '''

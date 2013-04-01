@@ -1,0 +1,40 @@
+
+<launch>
+  <node type="laser_scan_assembler" pkg="laser_assembler"
+        name="hokuyo_H1204906_assembler">
+    <remap from="scan" to="/scan_hokuyo_H1204906"/>
+    <remap from="/assemble_scans" to="~assemble_scans"/>
+    <param name="max_scans" type="int" value="1" />
+    <param name="fixed_frame" type="string" value="/base_link" />
+  </node>
+
+ <node type="hokuyo2pc.py" pkg="youbot_agent" name="converter1">
+    <remap from="~assemble_scans" to="/hokuyo_H1204906_assembler/assemble_scans"/>
+    <remap from="~cloud" to="/both/cloud"/>
+ </node>
+
+ <node type="laser_scan_assembler" pkg="laser_assembler"
+        name="hokuyo_H1205005_assembler">
+    <remap from="scan" to="/scan_hokuyo_H1205005"/>
+    <remap from="/assemble_scans" to="~assemble_scans"/>
+    <param name="max_scans" type="int" value="1" />
+    <param name="fixed_frame" type="string" value="/base_link" />
+ </node>
+ 
+ <node type="hokuyo2pc.py" pkg="youbot_agent" name="converter2">
+    <remap from="~assemble_scans" to="/hokuyo_H1205005_assembler/assemble_scans"/>
+    <remap from="~cloud" to="/both/cloud"/>
+ </node>
+
+ <node type="point_cloud_assembler" pkg="laser_assembler" name="both">
+    <param name="max_clouds" type="int" value="400" />
+    <param name="fixed_frame" type="string" value="/base_link" />
+    <remap from="/assemble_scans" to="~assemble_scans"/>
+  </node>
+
+ <node type="pc_safety.py" pkg="youbot_agent" name="pull">
+    <remap from="~assemble_scans" to="/both/assemble_scans"/>
+ </node>
+
+
+</launch>

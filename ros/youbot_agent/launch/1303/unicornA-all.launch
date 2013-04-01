@@ -1,0 +1,20 @@
+<!--
+Usage:
+    console1: roslaunch youbot_oodl youbot_oodl_driver.launch
+    console2: roslaunch youbot_agent unicornA-all.launch
+    console3: 
+     rosrun youbot_oodl youbot_keyboard_teleop.py  cmd_vel:=/youbot_safety/in_cmd_vel
+-->
+
+<launch>
+    <include file="$(find youbot_agent)/launch/1303/unicornA-arm.launch" />
+    <include file="$(find youbot_oodl)/launch/youbot_joint_state_publisher.launch"/>
+    <include file="$(find youbot_agent)/launch/1303/unicornA-hokuyos.launch" />
+    <include file="$(find youbot_agent)/launch/1303/unicornA-cams.launch" />
+
+    <include file="$(find youbot_agent)/launch/1303/unicornA-hokuyo-safety.launch" />
+    
+    <include file="$(find youbot_agent)/launch/1303/unicornA-youbot-safety.launch" />
+     
+
+</launch>

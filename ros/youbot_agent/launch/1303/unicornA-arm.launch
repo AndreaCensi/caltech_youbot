@@ -1,0 +1,8 @@
+<launch>
+
+
+    <node pkg="youbot_agent" type="fixed_arm_position.py" name="fixed_arm">
+        <param name="position"  value="look_up" />
+    </node>
+
+</launch>

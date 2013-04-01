@@ -1,0 +1,26 @@
+<launch>
+  <node type="laser_scan_assembler" pkg="laser_assembler"
+        name="hokuyo_H1204906_assembler">
+    <remap from="scan" to="/scan_hokuyo_H1204906"/>
+    <remap from="/assemble_scans" to="~assemble_scans"/>
+    <param name="max_scans" type="int" value="1" />
+    <param name="fixed_frame" type="string" value="/base_link" />
+  </node>
+
+
+ <node type="laser_scan_assembler" pkg="laser_assembler"
+        name="hokuyo_H1205005_assembler">
+    <remap from="scan" to="/scan_hokuyo_H1205005"/>
+    <remap from="/assemble_scans" to="~assemble_scans"/>
+    <param name="max_scans" type="int" value="1" />
+    <param name="fixed_frame" type="string" value="/base_link" />
+ </node>
+
+ <node type="hokuyo_safety.py" pkg="youbot_agent" name="hokuyo_safety" output="screen">
+    <remap from="~assemble_scans0" to="/hokuyo_H1204906_assembler/assemble_scans"/>
+    <remap from="~assemble_scans1" to="/hokuyo_H1205005_assembler/assemble_scans"/>
+
+    <remap from="~out_safety" to="/safety"/>
+ </node>
+
+</launch>
