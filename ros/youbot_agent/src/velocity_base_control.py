@@ -17,8 +17,8 @@ def main(args):
     
     def velocity_array_callback(msg):
         print('Received array ' + str(msg.data))
-#        msg = get_joint_velocity_msg(msg.data, rospy.get_rostime())
-#        velocity_publisher.publish(msg)
+        #msg = get_joint_velocity_msg(msg.data, rospy.get_rostime())
+        #velocity_publisher.publish(msg)
     
     rospy.Subscriber('/youbot_base/velocity_instruction', array_msgs.msg.FloatArray, velocity_array_callback)
     
@@ -35,9 +35,7 @@ def main(args):
             sys.stdout.write('\033[45m' + node_name + '$\033[0m ')
             evaled = eval(sys.stdin.readline())
             print(str(evaled))
-#            pdb.set_trace()
             if evaled.__class__ in [tuple, list]:
-#                print('\033[91mError: Command not supported\033[0m')
                 array = np.array(evaled)
                 msg = get_twist_velocity_msg(array, rospy.get_rostime())
                 velocity_publisher.publish(msg)

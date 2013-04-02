@@ -3,6 +3,7 @@
  <node type="youbot_safety.py" pkg="youbot_agent" name="youbot_safety" output="screen">
     <remap from="~safety" to="/safety"/>
     <remap from="~out_cmd_vel" to="/cmd_vel"/>
+    <!--- ~in_cmd_vel, Twist -->
  </node>
 
 </launch>

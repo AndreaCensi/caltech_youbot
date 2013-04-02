@@ -25,6 +25,7 @@ class GenericSafety():
         Input:
             ~safety  (msg, Safety)
 
+
     """
     def main(self, args, node_name='youbot_safety'):
         rospy.init_node(node_name)
@@ -46,6 +47,7 @@ class GenericSafety():
         rospy.spin()
 
     def define_events(self):
+        
         rospy.Subscriber('~safety', Safety, self.safety_callback)
         rospy.Timer(rospy.Duration(self.check_period), self.periodic_callback)
         rospy.Timer(rospy.Duration(self.info_period), self.info_callback)
@@ -96,7 +98,6 @@ class GenericSafety():
         desc = msg.desc
         stamp = msg.header.stamp
         constraints = yaml.load(msg.constraints)
-        # print 'extra: %s' % extra
 
         if not id_check in self.checks:
             msg = 'First time we see check %r.' % id_check
@@ -144,7 +145,12 @@ class GenericSafety():
 
 
 class YoubotSafety(GenericSafety):
+    """
+        ~in_cmd_vel, Twist
 
+        Output:
+            ~unsafe_cmd_vel, Twist
+    """
     @staticmethod
     def get_zero_twist():
         twist = Twist()
@@ -162,10 +168,17 @@ class YoubotSafety(GenericSafety):
             msg_stop = YoubotSafety.get_zero_twist()
             rospy.loginfo('Suppressing unsafe:  %s' % why)
             self.pub_cmd_vel.publish(msg_stop)
+            self.pub_unsafe_cmd_vel.publish(msg)
+
+    def transition_unsafe(self, desc):
+        rospy.loginfo('Now unsafe, sending stop.')
+        msg_stop = YoubotSafety.get_zero_twist()
+        self.pub_cmd_vel.publish(msg_stop)
 
     def define_events(self):
         GenericSafety.define_events(self)
 
+        self.pub_unsafe_cmd_vel = rospy.Publisher('~unsafe_cmd_vel', Twist)
         self.pub_cmd_vel = rospy.Publisher('~out_cmd_vel', Twist)
         rospy.Subscriber('~in_cmd_vel', Twist, self.cmd_vel_received)
 

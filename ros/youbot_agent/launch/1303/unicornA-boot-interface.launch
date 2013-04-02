@@ -1,0 +1,8 @@
+<launch>
+
+<node pkg='youbot_agent' name='array2twist' type='array2twist.py'  output='screen'>
+    <remap from='~cmd_vel' to="/youbot_safety/in_cmd_vel"/>
+    <!--<remap from='~cmd_array' to=""/>-->
+</node>
+
+</launch>

@@ -1,5 +1,5 @@
 
-rosbag record -j -o /ros-logs/unicornA  \
+rosbag record -j -o /ros-logs/unicornA_base1  \
 /arm_1/arm_controller/position_command \
 /arm_1/arm_controller/velocity_command \
 /arm_1/gripper_controller/position_command \
@@ -26,4 +26,9 @@ rosbag record -j -o /ros-logs/unicornA  \
 /rosout_agg \
 /scan_hokuyo_H1204906 \
 /scan_hokuyo_H1205005 \
-/tf
+/tf \
+/hokuyo_safety/out_safe \
+/hokuyo_safety/out_unsafe \
+/safety \
+/youbot_safety/in_cmd_vel \
+/array2twist/cmd_array
