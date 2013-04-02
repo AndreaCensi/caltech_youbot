@@ -5,7 +5,7 @@
 <launch>
   <arg name="noshow" default="true" />
 
-  <arg name="pixel_format" default="yuyv" /> <!-- mjpeg -> no accelerated -->
+  <arg name="pixel_format" default="yuyv" />
   <arg name="width" default="320" />
   <arg name="height" default="240" />
 
@@ -25,7 +25,7 @@
            value="/dev/v4l/by-id/usb-046d_0994_FEC24AA0-video-index0" />
     <param name="image_width" value="$(arg width)" />
     <param name="image_height" value="$(arg height)" />
-    <param name="pixel_format" value="$(arg pixel_format)" />
+    <param name="pixel_format" value="mjpeg" />
     <param name="camera_frame_id" value="/cam_back_2" />
     <param name="io_method" value="mmap"/>
   </node>
@@ -49,7 +49,7 @@
            value="/dev/v4l/by-id/usb-Vimicro_Corp._Venus_USB2.0_Camera-video-index0" />
     <param name="image_width" value="$(arg width)" />
     <param name="image_height" value="$(arg height)" />
-    <param name="pixel_format" value="mjpeg" />
+    <param name="pixel_format" value="$(arg pixel_format)" />
     <param name="camera_frame_id" value="/cam_eye_right" />
     <param name="io_method" value="mmap"/>
   </node>
