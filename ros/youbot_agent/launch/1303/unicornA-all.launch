@@ -15,6 +15,9 @@ Usage:
     <include file="$(find youbot_agent)/launch/1303/unicornA-hokuyo-safety.launch" />
     
     <include file="$(find youbot_agent)/launch/1303/unicornA-youbot-safety.launch" />
-     
+    <include file="$(find youbot_agent)/launch/1303/unicornA-boot-interface.launch" />
 
+
+    <include file="$(find youbot_agent)/launch/1303/unicornA-battery.launch" />
+          
 </launch>

@@ -14,6 +14,7 @@ rosbag record -j -o /ros-logs/unicornA_base1  \
 /clicked_point \
 /cmd_vel \
 /diagnostics \
+/dashboard/power_state \
 /hokuyo_H1204906/parameter_descriptions \
 /hokuyo_H1204906/parameter_updates \
 /hokuyo_H1205005/parameter_descriptions \

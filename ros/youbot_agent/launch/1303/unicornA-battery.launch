@@ -1,0 +1,11 @@
+<launch>
+<node pkg='youbot_battery_monitor' name='youbot_battery_monitor' 
+    type='youbot_battery_monitor'  output='log'
+
+    args="/dev/serial/by-id/usb-TrinamicMotion_Ctl_TMCM-849__virtual_COM__TMCM849-if00 eth0 eth0"
+    >
+    <!--<remap from='~cmd_vel' to="/youbot_safety/in_cmd_vel"/>-->
+    <!--<remap from='~cmd_array' to=""/>-->
+</node>
+
+</launch>

@@ -36,10 +36,12 @@ class HokuyoSafety():
         self.pub_unsafe = rospy.Publisher('~out_unsafe', PointCloud)
         self.pub_safety = rospy.Publisher('~out_safety', Safety)
 
-        self.warn_distance = rospy.get_param('~warn_distance', 0.7)
-        self.ignore_closer = rospy.get_param('~ignore_closer', 0.4)
+        self.warn_distance = rospy.get_param('~warn_distance', 0.65)
+        self.ignore_closer = rospy.get_param('~ignore_closer', 0.35)
 
         self.publish_clouds = rospy.get_param('~publish_clouds', True)
+
+        rospy.loginfo('publish clouds: %r' % self.publish_clouds)
 
         assert 0 <= self.ignore_closer < self.warn_distance
 
@@ -107,7 +109,6 @@ class HokuyoSafety():
         
         self.pub_safety.publish(msg_safety)
 
-
     def init_services(self, names , timeout=1):
         rospy.loginfo('Opening service proxies...')
         srv_assemble = []
@@ -131,7 +132,6 @@ class HokuyoSafety():
             clouds.append(resp.cloud)
         return clouds
     
-
 
 def main(args):
     HokuyoSafety().main(args)
