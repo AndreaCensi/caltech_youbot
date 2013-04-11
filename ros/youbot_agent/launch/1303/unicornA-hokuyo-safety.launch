@@ -21,6 +21,7 @@
     <remap from="~assemble_scans0" to="/hokuyo_H1204906_assembler/assemble_scans"/>
     <remap from="~assemble_scans1" to="/hokuyo_H1205005_assembler/assemble_scans"/>
     <param name="publish_clouds" value="0"/>
+    <param name="warn_distance" value="1.0"/>
     <remap from="~out_safety" to="/safety"/>
  </node>
 
