@@ -3,9 +3,9 @@ import roslib; roslib.load_manifest('youbot_agent')
 import sys
 import numpy as np
 import yaml
-
-import rospy #@UnresolvedImport
-import array_msgs.msg #@UnresolvedImport
+import time
+import rospy 
+import array_msgs.msg 
 
 from youbot_agent.msg import Safety
 from rospy import ROSException
@@ -151,6 +151,10 @@ class YoubotSafety(GenericSafety):
         Output:
             ~unsafe_cmd_vel, Twist
     """
+
+    def __init__(self):
+        self.last_cmd_timestamp = 0
+
     @staticmethod
     def get_zero_twist():
         twist = Twist()
@@ -158,7 +162,20 @@ class YoubotSafety(GenericSafety):
         twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0
         return twist
 
+    def periodic_callback(self, msg):
+        GenericSafety.periodic_callback(self, msg)
+
+        interval = 2.0
+        now = time.time()
+        passed = now - self.last_cmd_timestamp
+        if passed > interval:
+            # rospy.loginfo('No commands received in %.fs; send zero commands.' % passed)
+            msg_stop = YoubotSafety.get_zero_twist()
+            self.pub_cmd_vel.publish(msg_stop)
+
     def cmd_vel_received(self, msg):
+        self.last_cmd_timestamp = time.time()
+
         twist = msg
         safe, why = self.is_twist_safe(twist)
         if safe:
