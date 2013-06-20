@@ -1,15 +1,14 @@
 #!/usr/bin/env python
-
 import roslib; roslib.load_manifest('youbot_agent')
 
-import rospy #@UnresolvedImport
-import brics_actuator.msg #@UnresolvedImport
-import sys
-import numpy as np
-
-import array_msgs.msg #@UnresolvedImport
-
 from position_joint_control import get_joint_position_msg
+import array_msgs.msg  # @UnresolvedImport
+import brics_actuator.msg  # @UnresolvedImport
+import numpy as np
+import rospy  # @UnresolvedImport
+import sys
+
+
 """
     Use like this:
         
@@ -21,7 +20,8 @@ def main(args):
     rospy.init_node('fixed_arm_position')
     
     positions = {
-        'look_forward': [3.14, 1, -2.4, 0.2, 3],
+        # 'look_forward': [3.14, 1, -2.4, 0.2, 3],
+        'look_forward': [2.95, 1, -2.4, 0.2, 3],
         'look_up':  [2.95, 0.015, -0.02, 0.36, 2.93],
     }
 
@@ -41,7 +41,7 @@ def main(args):
 
     array = np.array(positions[value])
 
-    position_publisher = rospy.Publisher('/arm_1/arm_controller/position_command', 
+    position_publisher = rospy.Publisher('/arm_1/arm_controller/position_command',
                                          brics_actuator.msg.JointPositions)
 
 
