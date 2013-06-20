@@ -1,0 +1,25 @@
+<!--
+    UnicornB: use just the arm and the front camera
+    and start from a different position.
+
+-->
+
+<launch>
+    <include file="$(find youbot_agent)/launch/1303/unicornB-arm.launch" />
+
+    
+    <include file="$(find youbot_oodl)/launch/youbot_joint_state_publisher.launch"/>
+    
+    <include file="$(find youbot_agent)/launch/1303/unicornA-hokuyos.launch" />
+
+    <include file="$(find youbot_agent)/launch/1303/unicornA-cams.launch" />
+    
+    <include file="$(find youbot_agent)/launch/1303/unicornA-hokuyo-safety.launch" />
+    
+    <include file="$(find youbot_agent)/launch/1303/unicornA-youbot-safety.launch" />
+    <include file="$(find youbot_agent)/launch/1303/unicornA-boot-interface.launch" />
+
+
+    <include file="$(find youbot_agent)/launch/1303/unicornA-battery.launch" />
+          
+</launch>

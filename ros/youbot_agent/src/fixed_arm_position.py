@@ -26,6 +26,7 @@ def main(args):
     }
 
     value = rospy.get_param('~position', None)
+    rospy.loginfo('Setting position %r' % value)
     if value is None:
         msg = 'Please set "position" to one of: %s.' % positions.keys()
         rospy.logerr(msg)
@@ -36,16 +37,22 @@ def main(args):
         rospy.logerr(msg)
         return 
 
+    repeat = rospy.get_param('~repeat', False)
+
     array = np.array(positions[value])
 
     position_publisher = rospy.Publisher('/arm_1/arm_controller/position_command', 
                                          brics_actuator.msg.JointPositions)
 
+
     while not rospy.is_shutdown():
-        rospy.sleep(1.0)
         msg = get_joint_position_msg(array, rospy.get_rostime())
         position_publisher.publish(msg)    
-        rospy.logdebug('Published position command: ' + str(array))
+        rospy.loginfo('Published position command: ' + str(msg))
+        rospy.sleep(1.0)
+        if not repeat:
+            break
+
 
 if __name__ == '__main__':
     main(sys.argv)

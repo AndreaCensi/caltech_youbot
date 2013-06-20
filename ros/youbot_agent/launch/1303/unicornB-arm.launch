@@ -2,8 +2,8 @@
 
 
     <node pkg="youbot_agent" type="fixed_arm_position.py" name="fixed_arm">
-        <param name="repeat"  value="true" />
-        <param name="position"  value="look_up" />
+        <param name="position"  value="look_forward" />
+        <param name="repeat"  value="0" />
     </node>
 
 </launch>

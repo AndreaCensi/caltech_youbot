@@ -1,5 +1,5 @@
 
-rosbag record -j -o /ros-logs/$1  \
+rosbag record -j -o /ros-logs/unicornA_teleop_nmap  \
 /arm_1/arm_controller/position_command \
 /arm_1/arm_controller/velocity_command \
 /arm_1/gripper_controller/position_command \
